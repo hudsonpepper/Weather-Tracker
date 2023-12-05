@@ -32,8 +32,18 @@ function cityData(name) {
     console.log("Raw Data: ", data)
     if (data.length > 0) {
       console.log("Geocode(here): ", data[0])
-      let longName = `${data[0].name}, ${data[0].state}`;
-      console.log(`LongerName: ${data[0].name}, ${data[0].state}`);
+      let longName;
+      if(data[0].state == null){
+        longName = `${data[0].name}, ${data[0].country}`
+        console.log(`LongerName: ${longName}`);
+      }
+      else {
+        longName = `${data[0].name}, ${data[0].state}`;
+        console.log(`LongerName: ${longName}`);
+
+      }
+
+
       addBtn(priorNames, data[0].name)
       console.log(`Lat: ${data[0].lat}| Lon: ${data[0].lon}`);
       //const apiUrlWeather = `https://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&q=${name}&units=imperial`
