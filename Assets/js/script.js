@@ -1,6 +1,8 @@
 const apiKey = "76270777d3f53b47d91433b7022b4743";
 const textData = $("#cityName");
 const formEl = $("#cityData");
+const errorEl = $("#errorMessage");
+console.log(errorEl);
 let cityName, lat, lon;
 let priorNames = JSON.parse(localStorage.getItem("prevCities"));
 priorNames = loadPriorNamesFn(priorNames);
@@ -12,9 +14,12 @@ formEl.on("submit", function (event) {
   console.log(cityName);
   if (cityName != "") {
     cityData(cityName);
+    errorEl.addClass("invisible");
   }
   else {
     console.log("empty message");
+    errorEl.text("Error: Empty Input");
+    errorEl.removeClass("invisible");
   }
 });
 
@@ -74,12 +79,16 @@ function cityData(name) {
               })
           }
           else {
-            console.log("Invalid City Name: second catch")
+            console.log("Invalid City Name: second catch");
+            errorEl.text("Error: Cannot Find City");
+            errorEl.removeClass("invisible");
           }
         })
     }
     else {
       console.log("Invalid City Name: first catch")
+      errorEl.text("Error: Cannot Find City");
+      errorEl.removeClass("invisible");
     }
   })
   //const lat, long = data.coord.lat, data.coord.lon;
