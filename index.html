@@ -16,12 +16,13 @@
   </header>
   <div class="row m-1">
     <div class="col-4 col">
-      <form class="mx-auto" id="cityData">
+      <form class="mx-auto d-flex flex-column justify-content-center" id="cityData">
         <div class="form-group mx-auto" id="cityForm">
-          <label class="mx-auto" for="cityName">City Name</label>
+          <label class="mx-auto p-2 font-weight-bold" for="cityName">City Name</label>
           <input type="cityName" class="mx-auto form-control" id="cityName" placeholder="Chicago">
         </div>
-        <button type="submit" class="btn btn-primary btn-block mx-auto">Confirm</button>
+        <button type="submit" class="btn btn-primary btn-block mx-auto px-5 m-2">Confirm</button>
+        <p class="text-danger invisible" id="errorMessage">Error</p> 
       </form>
       <hr>
       <div class="row" id="pastCities">

@@ -1,6 +1,8 @@
 const apiKey = "76270777d3f53b47d91433b7022b4743";
 const textData = $("#cityName");
 const formEl = $("#cityData");
+const errorEl = $("#errorMessage");
+console.log(errorEl);
 let cityName, lat, lon;
 let priorNames = JSON.parse(localStorage.getItem("prevCities"));
 priorNames = loadPriorNamesFn(priorNames);
@@ -12,9 +14,12 @@ formEl.on("submit", function (event) {
   console.log(cityName);
   if (cityName != "") {
     cityData(cityName);
+    errorEl.addClass("invisible");
   }
   else {
     console.log("empty message");
+    errorEl.text("Error: Empty Input");
+    errorEl.removeClass("invisible");
   }
 });
 
@@ -27,9 +32,16 @@ function cityData(name) {
     console.log("Raw Data: ", data)
     if (data.length > 0) {
       console.log("Geocode(here): ", data[0])
-      let longName = `${data[0].name}, ${data[0].state}`;
-      console.log(`LongerName: ${data[0].name}, ${data[0].state}`);
-      addBtn(priorNames, data[0].name)
+      let longName;
+      if(data[0].state == null){
+        longName = `${data[0].name}, ${data[0].country}`
+        console.log(`LongerName: ${longName}`);
+      }
+      else {
+        longName = `${data[0].name}, ${data[0].state}`;
+        console.log(`LongerName: ${longName}`);
+      }
+      addBtn(priorNames, data[0].name, true)
       console.log(`Lat: ${data[0].lat}| Lon: ${data[0].lon}`);
       //const apiUrlWeather = `https://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&q=${name}&units=imperial`
       apiUrlWeather = `https://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&lat=${data[0].lat}&lon=${data[0].lon}&units=imperial`
@@ -74,12 +86,16 @@ function cityData(name) {
               })
           }
           else {
-            console.log("Invalid City Name: second catch")
+            console.log("Invalid City Name: second catch");
+            errorEl.text("Error: Cannot Find City");
+            errorEl.removeClass("invisible");
           }
         })
     }
     else {
       console.log("Invalid City Name: first catch")
+      errorEl.text("Error: Cannot Find City");
+      errorEl.removeClass("invisible");
     }
   })
   //const lat, long = data.coord.lat, data.coord.lon;
@@ -118,19 +134,40 @@ function dispFutWeather(futDataArr) {
     $(curChild).children().eq(2).children().eq(2).text(`Humidity: ${futData.main.humidity} %`);
   }
 }
-function addBtn(priorNames, cityName) {
+function addBtn(priorNames, cityName, isNew) {
   console.log("Add Button:", cityName);
   if (priorNames.includes(cityName)) {
     console.log("You've already Searched for ", cityName);
+    for(let i = 1; i < $(".btn-danger").parent().children().length; i++) {
+      if($(".btn-danger").parent().children().eq(i).text() == cityName){
+        console.log("found element");
+        $(".btn-danger").parent().children().eq(i).removeClass("btn-secondary");
+        $(".btn-danger").parent().children().eq(i).addClass("btn-primary");
+      }
+      else{
+      $(".btn-danger").parent().children().eq(i).removeClass("btn-primary");
+      $(".btn-danger").parent().children().eq(i).addClass("btn-secondary");
+      }
+    }
+    console.log("Parent Child: ", $(".btn-danger").parent().children());
+
   }
   else {
     priorNames.push(cityName);
     localStorage.setItem("prevCities", JSON.stringify(priorNames));
     let btnEl = $("<button>");
     btnEl.text(cityName);
+    if(isNew) {
+      console.log("Primary El", $(".btn-primary").eq(1));
+      $(".btn-primary").eq(1).addClass("btn-secondary")
+      $(".btn-primary").eq(1).removeClass("btn-primary")
+      btnEl.addClass("btn btn-primary btn-lg btn-block my-1");
+      $("#pastCities").append(btnEl);
+    }
+    else {
     btnEl.addClass("btn btn-secondary btn-lg btn-block my-1");
     $("#pastCities").append(btnEl);
-
+    }
   }
 };
 
@@ -144,6 +181,13 @@ $("#pastCities").on("click", ".btn", function (event) {
   else {
     console.log(btnText, " Weather");
     cityData(btnText);
+    for(let i = 1; i < $(".btn-primary").length; i++) {
+      $(event.currentTarget).parent().children().eq(i).removeClass("btn-primary");
+      $(event.currentTarget).parent().children().eq(i).addClass("btn-secondary");
+    }
+    console.log("Parent Child: ", $(event.currentTarget).parent().children());
+    $(event.currentTarget).removeClass("btn-secondary");
+    $(event.currentTarget).addClass("btn-primary");
   }
 })
 
@@ -162,7 +206,7 @@ function loadPriorNamesFn(myLocalPrior) {
   else {
     console.log("Local prior exists");
     for (let i = 0; i < myLocalPrior.length; i++) {
-      addBtn([], myLocalPrior[i]);
+      addBtn([], myLocalPrior[i], false);
     }
     return myLocalPrior;
   }
