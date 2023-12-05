@@ -47,10 +47,11 @@ function dispCurWeather(curData) {
 
   $("#currWeather").children().eq(0).text(`${curData.name} (${dayjs.unix(curData.dt).format('MMM D, YYYY @ h:mm a')})`);
   const iconUrl = `https://openweathermap.org/img/w/${curData.weather[0].icon}.png`;
-  $("#currWeather").children().eq(1).attr("src", iconUrl);
-  $("#currWeather").children().eq(1).attr("alt", curData.weather[0].description);
-  $("#currWeather").children().eq(1).attr("height", "50px");
-  $("#currWeather").children().eq(1).attr("width", "50px");
+  $("#currWeather").children().eq(1).children().eq(0).attr("src", iconUrl);
+  $("#currWeather").children().eq(1).children().eq(0).attr("alt", curData.weather[0].description);
+  $("#currWeather").children().eq(1).children().eq(0).attr("height", "50px");
+  $("#currWeather").children().eq(1).children().eq(0).attr("width", "50px");
+  $("#currWeather").children().eq(1).children().eq(1).text(curData.weather[0].description);
   $("#currWeather").children().eq(2).children().eq(0).text(`Temp: ${curData.main.temp}°F`);
   $("#currWeather").children().eq(2).children().eq(1).text(`Wind: ${curData.wind.speed} MPH`);
   $("#currWeather").children().eq(2).children().eq(2).text(`Humidity: ${curData.main.humidity} %`);
@@ -88,28 +89,21 @@ function addBtn(cityName) {
 
   }
 };
-//<button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
-//<button type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button>
 
+$("#pastCities").on("click", ".btn", function(event){
+  console.log("click");
+  let btnText = event.currentTarget.textContent;
+  console.log(btnText);
+  if(btnText === "Clear Cities") {
+    console.log("Clear Condition");
+    clearCity();
+  }
+  else {
+    console.log(btnText, " Weather");
+    cityData(btnText);
+  }
+})
 
-
-
-
-/*
-// API Key for the weather
-const apiKey = "76270777d3f53b47d91433b7022b4743";
-
-// Img src for the icons (Sunny, cloudy, night, etc.)
-const iconUrl = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
-
-// Link for the current weather + lat and longitude
-const apiUrlWeather = `https://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&q=${cityName}&units=imperial`;
-// 3 hour forcast for every 3 hours.
-// Should be array of data for 5 days (roughly 40 inputs)
-const threeHourWeatherArr = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`
-
-
-// NOTE: Prevent Default on form;
-
-const formEl = document.querySelector("#cityForm");
-*/
+function clearCity() {
+  console.log("Clear City Function Activate!");
+}
