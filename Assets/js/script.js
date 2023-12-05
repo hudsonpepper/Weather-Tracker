@@ -2,12 +2,13 @@ const apiKey = "76270777d3f53b47d91433b7022b4743";
 const textData = $("#cityName");
 const formEl = $("#cityData");
 let cityName, lat, lon;
+let priorNames = [];
 formEl.on("submit", function (event) {
   console.log("click");
   event.preventDefault();
   cityName = textData.val();
   console.log(cityName);
-  let dat = cityData(cityName);
+  cityData(cityName);
 });
 
 function cityData(name) {
@@ -19,7 +20,7 @@ function cityData(name) {
       return response.json();
     })
     .then(function (data) {
-
+      addBtn(data.name);
       console.log(data);
       dispCurWeather(data);
       const lat = data.coord.lat
@@ -40,6 +41,60 @@ function cityData(name) {
     })
   //const lat, long = data.coord.lat, data.coord.lon;
 }
+
+function dispCurWeather(curData) {
+  console.log("dispCurWeather: ", curData);
+
+  $("#currWeather").children().eq(0).text(`${curData.name} (${dayjs.unix(curData.dt).format('MMM D, YYYY @ h:mm a')})`);
+  const iconUrl = `https://openweathermap.org/img/w/${curData.weather[0].icon}.png`;
+  $("#currWeather").children().eq(1).attr("src", iconUrl);
+  $("#currWeather").children().eq(1).attr("alt", curData.weather[0].description);
+  $("#currWeather").children().eq(1).attr("height", "50px");
+  $("#currWeather").children().eq(1).attr("width", "50px");
+  $("#currWeather").children().eq(2).children().eq(0).text(`Temp: ${curData.main.temp}°F`);
+  $("#currWeather").children().eq(2).children().eq(1).text(`Wind: ${curData.wind.speed} MPH`);
+  $("#currWeather").children().eq(2).children().eq(2).text(`Humidity: ${curData.main.humidity} %`);
+}
+function dispFutWeather(futDataArr) {
+  console.log("dispFutWeather: ", futDataArr);
+  for (let i = 0; i < 5; i++) {
+    let index = 8 * i + 7;
+    let futData = futDataArr.list[index];
+    console.log("futData", futData)
+    const curChild = $("#futWeather").children().eq(i);
+    console.log(curChild);
+    $(curChild).children().eq(0).text(`(${dayjs.unix(futData.dt).format('M/D/YY')})`);
+    const iconUrl = `https://openweathermap.org/img/w/${futData.weather[0].icon}.png`;
+    $(curChild).children().eq(1).attr("src", iconUrl);
+    $(curChild).children().eq(1).attr("alt", futData.weather[0].description);
+    $(curChild).children().eq(1).attr("height", "50px");
+    $(curChild).children().eq(1).attr("width", "50px");
+    $(curChild).children().eq(2).children().eq(0).text(`Temp: ${futData.main.temp}°F`);
+    $(curChild).children().eq(2).children().eq(1).text(`Wind: ${futData.wind.speed} MPH`);
+    $(curChild).children().eq(2).children().eq(2).text(`Humidity: ${futData.main.humidity} %`);
+  }
+}
+function addBtn(cityName) {
+  console.log("Add Button:", cityName);
+  if (priorNames.includes(cityName)) {
+    console.log("You've already Searched for ", cityName);
+  }
+  else {
+    priorNames.push(cityName);
+    let btnEl = $("<button>");
+    btnEl.text(cityName);
+    btnEl.addClass("btn btn-secondary btn-lg btn-block my-1");
+    $("#pastCities").append(btnEl);
+
+  }
+};
+//<button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+//<button type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button>
+
+
+
+
+
 /*
 // API Key for the weather
 const apiKey = "76270777d3f53b47d91433b7022b4743";
@@ -58,36 +113,3 @@ const threeHourWeatherArr = `https://api.openweathermap.org/data/2.5/forecast?la
 
 const formEl = document.querySelector("#cityForm");
 */
-function dispCurWeather(curData) {
-  console.log("dispCurWeather: ", curData);
-
-  $("#currWeather").children().eq(0).text(`${curData.name} (${dayjs.unix(curData.dt).format('MMM D, YYYY @ h:mm a')})`);
-  const iconUrl = `https://openweathermap.org/img/w/${curData.weather[0].icon}.png`;
-  $("#currWeather").children().eq(1).attr("src", iconUrl);
-  $("#currWeather").children().eq(1).attr("height", "50px");
-  $("#currWeather").children().eq(1).attr("width", "50px");
-  $("#currWeather").children().eq(2).children().eq(0).text(`Temp: ${curData.main.temp}°F`);
-  $("#currWeather").children().eq(2).children().eq(1).text(`Wind: ${curData.wind.speed} MPH`);
-  $("#currWeather").children().eq(2).children().eq(2).text(`Humidity: ${curData.main.humidity} %`);
-}
-function dispFutWeather(futDataArr) {
-  console.log("dispFutWeather: ", futDataArr);
-  for (let i = 0; i < 5; i++) {
-    let index = 8 * i;
-    let futData = futDataArr.list[index];
-    console.log("futData", futData)
-    const curChild = $("#futWeather").children().eq(i);
-    console.log(curChild);
-    $(curChild).children().eq(0).text(`(${dayjs.unix(futData.dt).format('M/D/YY')})`);
-    const iconUrl = `https://openweathermap.org/img/w/${futData.weather[0].icon}.png`;
-    $(curChild).children().eq(1).attr("src", iconUrl);
-    $(curChild).children().eq(1).attr("height", "50px");
-    $(curChild).children().eq(1).attr("width", "50px");
-    $(curChild).children().eq(2).children().eq(0).text(`Temp: ${futData.main.temp}°F`);
-    $(curChild).children().eq(2).children().eq(1).text(`Wind: ${futData.wind.speed} MPH`);
-    $(curChild).children().eq(2).children().eq(2).text(`Humidity: ${futData.main.humidity} %`);
-  }
-}
-function addBtn(cityName) {
-  console.log("Add Button")
-};
