@@ -1,89 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- Head -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <!-- Shortcut Icon -->
+  <link rel="shortcut icon" type="image/h-icon" href="https://openclipart.org/download/201003/primary-source-h.svg ">
   <title>Weather</title>
 </head>
 
+<!-- Body -->
 <body>
+  <!-- Header -->
   <header>
     <h1 class="bg-dark text-white text-center">Weather dashboard</h1>
   </header>
+  <!-- Main Section -->
   <div class="row m-1">
-    <div class="col-4 col">
+    <!-- Left Side of Page -->
+    <div class="col-3 col">
+      <!-- City Name Header -->
+      <h1 class="mx-auto text-center my-2 p-1 ">City Name</h1>
+      <!-- Form for Entering in City Info -->
       <form class="mx-auto d-flex flex-column justify-content-center" id="cityData">
         <div class="form-group mx-auto" id="cityForm">
-          <label class="mx-auto p-2 font-weight-bold" for="cityName">City Name</label>
-          <input type="cityName" class="mx-auto form-control" id="cityName" placeholder="Chicago">
+          <input type="cityName" class="mx-auto form-control" id="cityName" placeholder="Enter City: Chicago">
         </div>
-        <button type="submit" class="btn btn-primary btn-block mx-auto px-5 m-2">Confirm</button>
-        <p class="text-danger invisible" id="errorMessage">Error</p> 
+        <!-- Confirm Button -->
+        <button type="submit" class="btn btn-primary btn-block btn-lg mx-auto px-auto mt-3 mb-0">Confirm</button>
+        <!-- Error Message PlaceHolder-->
+        <p class="text-danger text-center p-0 m-0 invisible" id="errorMessage">Error</p>
       </form>
       <hr>
+      <!-- Past Cities -->
       <div class="row" id="pastCities">
+        <!-- Clear Cities Btn -->
         <button type="button" class="btn btn-danger btn-lg btn-block my-1">Clear Cities</button>
       </div>
     </div>
-    <div class="col-8 col">
+    <!-- Right Side of Page -->
+    <div class="col-9 col">
+      <!-- Current Weather -->
       <div class="card col-12" id="currWeather">
+        <!-- City Name PlaceHolder -->
         <div class="card-header"> Please Enter City Name</div>
-        <div>
-          <img alt="">
-          <p></p>
-        </div>
         <div class="card-body">
+          <!-- Icon Placeholder -->
+          <div class="col">
+            <img alt="">
+            <p></p>
+          </div>
+          <!-- Weather Placeholders -->
           <div></div>
           <div></div>
           <div></div>
         </div>
       </div>
       <hr>
+      <!-- Past Weather -->
       <div class="container">
         <div class="row my-1 mx-auto" id="futWeather">
-          <div class="card col-12 col-sm-12 col-md-4 col-lg-2 p-0 mx-auto" id="day1">
+          <!-- Day 1 -->
+          <div class="card col-12 col-sm-12 col-md-4 col-lg p-0 mx-auto" id="day1">
             <div class="card-header">Day1</div>
+            <!-- Icon -->
             <img alt="">
+            <!-- Weather Placeholder -->
             <div class="card-body">
               <div></div>
               <div></div>
               <div></div>
             </div>
           </div>
-          <div class="card col-12 col-sm-12 col-md-4 col-lg-2 p-0 mx-auto" id="day2">
+          <!-- Day 2 -->
+          <div class="card col-12 col-sm-12 col-md-4 col-lg p-0 mx-auto" id="day2">
             <div class="card-header">Day2</div>
+            <!-- Icon -->
             <img alt="">
+            <!-- Weather Placeholder -->
             <div class="card-body">
               <div></div>
               <div></div>
               <div></div>
             </div>
           </div>
-          <div class="card col-12 col-sm-12 col-md-4 col-lg-2 p-0 mx-auto" id="day3">
+          <!-- Day 3 -->
+          <div class="card col-12 col-sm-12 col-md-4 col-lg p-0 mx-auto" id="day3">
             <div class="card-header">Day3</div>
+            <!-- Icon -->
             <img alt="">
+            <!-- Weather Placeholder -->
             <div class="card-body">
               <div></div>
               <div></div>
               <div></div>
             </div>
           </div>
-          <div class="card col-12 col-sm-12 col-md-6 col-lg-2 p-0 mx-auto" id="day4">
+          <!-- Day 4 -->
+          <div class="card col-12 col-sm-12 col-md-6 col-lg p-0 mx-auto" id="day4">
             <div class="card-header">Day4</div>
+            <!-- Icon -->
             <img alt="">
+            <!-- Weather Placeholder -->
             <div class="card-body">
               <div></div>
               <div></div>
               <div></div>
             </div>
           </div>
-          <div class="card col-12 col-sm-12 col-md-6 col-lg-2 p-0 mx-auto" id="day5">
+          <!-- Day 5 -->
+          <div class="card col-12 col-sm-12 col-md-6 col-lg p-0 mx-auto" id="day5">
             <div class="card-header">Day5</div>
+            <!-- Icon -->
             <img alt="">
+            <!-- Weather Placeholder -->
             <div class="card-body">
               <div></div>
               <div></div>
@@ -94,10 +128,12 @@
       </div>
     </div>
   </div>
-
+  <!-- jQuery Script -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- dayjs Script -->
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-  <script src="Assets/js/script.js"></script>
+  <!-- My Script -->
+  <script src="assets/js/script.js"></script>
 </body>
 
 </html>
