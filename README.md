@@ -1,6 +1,6 @@
 # Weather Tracker [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This project is designed to be a weather tracker. It saves your previously searched for cities and gives you both the current and future weather conditions. 
+This project is designed to be a minimalistic weather tracker. It saves your previously searched for cities and gives you both the current and future weather conditions. 
 
 Technologies Used:
 1. HTML
@@ -8,10 +8,11 @@ Technologies Used:
 3. JavaScript
 4. jQuery
 5. OpenWeather API
-6. Bootstrap
-7. Local Storage
-8. GitHub
-9. GitHub Pages
+6. dayjs
+7. Bootstrap
+8. Local Storage
+9. GitHub
+10. GitHub Pages
 
 ## User Story
 
@@ -27,8 +28,8 @@ This site should be used to find and compare weather data across various cities 
 <!-- Edit Link -->
 The site can be accessed here: https://hudsonpepper.github.io/Weather-Tracker/
 <!-- Add Screenshot of final product -->
-Example Screenshot of End-card of the Quiz:
-![Screenshot of Weather Tracker](./Assets/images/Screenshot_Weather-Tracker.png "Screenshot")
+Example Screenshot of Deployed Tracker: 
+![Screenshot of Weather Tracker](./assets/images/Screenshot_Weather-Tracker.png "Screenshot")
 
 
 ## Credits
