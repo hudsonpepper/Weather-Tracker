@@ -29,7 +29,7 @@ This site should be used to find and compare weather data across various cities 
 The site can be accessed here: https://hudsonpepper.github.io/Weather-Tracker/
 <!-- Add Screenshot of final product -->
 Example Screenshot of Deployed Tracker: 
-![Screenshot of Weather Tracker](./assets/images/Screenshot_Weather-Tracker.png "Screenshot")
+![Screenshot of Weather Tracker](./Assets/images/Screenshot_Weather-Tracker.png "Screenshot")
 
 
 ## Credits
